@@ -369,6 +369,8 @@
         $pseudo = "Bob";
         $password = "soleil";
 
+        echo $error;
+
         // Je rentre dans ce if, uniquement si ces deux valeurs existent bel et bien !
         // isset me renvoie "true" si la variable existe
         if (isset($pseudo) && isset($password)) {
@@ -377,6 +379,8 @@
             if (empty($pseudo) || empty($password)) {
                 echo "Attention vous devez bien saisir le pseudo et le password<br>";
             }
+        } else {
+            echo "L'une ou l'autre des variables n'existe pas... :(  <br>";
         }
 
         // supposons la var suivante récupérée d'un formulaire
@@ -412,13 +416,92 @@
                 break;
         }
 
+        separateur();
+
         // EXERCICE : Refaire cette condition switch, mais en if / elseif / else 
 
+        $couleur = "vert";
+
+        if ($couleur == "bleu") {
+            echo "Vous aimez le bleu<br>";
+        } elseif ($couleur == "rouge") {
+            echo "Vous aimez le rouge<br>";
+        } elseif ($couleur == "vert") {
+            echo "Vous aimez le vert<br>";
+        } else {
+            echo "Vous n'aimez ni le bleu, ni le rouge, ni le vert<br>";
+        }
+
+        if ($couleur == "bleu") echo "Vous aimez le bleu<br>";
+        elseif ($couleur == "rouge") echo "Vous aimez le rouge<br>";
+        elseif ($couleur == "vert") echo "Vous aimez le vert<br>";
+        else echo "Vous n'aimez ni le bleu, ni le rouge, ni le vert<br>";
 
 
         echo '<h2>08 - Fonctions prédéfinies</h2>';
 
+        // Les fonctions prédéfinies sont inscrites et font parties du langage lui même, on se contente de les exécuter
+        // Pour plus d'informations sur les fonctions d'un langage, on se réfère à la documentation officielle
+        // Ce qu'on a besoin de savoir pour manipuler une fonction, c'est : 
+        // - Quels sont les paramètres qu'elle attend (obligatoires et facultatifs, les types)
+        // - Quel est le retour de cette fonction
 
+        // https://www.php.net/manual/en/indexes.functions.php
+        // Ci dessus la liste des fonctions et méthodes de PHP 
+
+        // Fonction date() 
+        // Permet d'afficher la date selon le format souhaité
+
+        // time() me donne le timestamp de l'instant
+        echo "Notre temps de maintenant en horodatage UNIX (nombre de secondes depuis janvier 1970 : " . time() . "<hr>";
+        // La fonction date se comporte avec des tokens de remplacement, (voir doc), c'est à dire que certaines lettres sont remplacées par des valeurs, à savoir, d c'est le numéro du jour sur deux chiffres, m c'est le numéro du mois sur deux chiffres, Y c'est l'année sur 4 chiffres
+        echo "La date du jour : " . date("d/m/Y") . "<hr>";
+        // Si je souhaite formater une date spécifique (pas forcement celle d'aujourd'hui), je peux la spécifier en second argument (facultatif), par contre, je dois lui transmettre en timestamp :(   heureusement, j'ai la fonction strtotime qui me permet de transformer une date classique en timestamp pour faire fonctionner ma fonction date)
+        echo "La date du jour : " . date("d/m/Y", strtotime("2025-01-01"));
+        separateur();
+
+        // Fonctions de traitement de chaines de caractères
+
+        // strlen() / iconv_strlen()
+        // Fonction prédéfinie permettant de compter le nombre de caractères dans une chaine
+
+        // strlen() ATTENTION me retourne le nombre d'octets d'une chaine de caractères (son poids)
+        echo "Taille de la chaine : " . strlen("bônjôùr") . "<hr>";
+        // iconv_strlen() : me retourne la taille réelle, le nombre de caractères de cette chaine
+        echo "Taille de la chaine : " . iconv_strlen("bônjôùr") . "<hr>";
+
+        // C'est ce qu'on utilisera pour des contrôles de taille de saisie ! 
+        // Par exemple vérifier si un password est assez long ! 
+
+        $password = "azertyzzzzz";
+
+        // Ci après le contrôle de longueur de mot de passe 
+        if (iconv_strlen($password) < 8) {
+            echo "<div style='background-color:red; color:white; padding:20px;'>ATTENTION, le password doit faire au moins 8 caractères !!!</div><hr>";
+        } else {
+            echo "<div style='background-color:green; color:white; padding:20px;'>Password OK</div><hr>";
+        }
+
+        // Il existe plein de fonctions de vérifications
+        // is_integer
+        // is_numeric
+        // is_string
+        // is_array
+        // etc etc etc  
+
+        $numTel = 0102030405;
+        $numTel = "0102030405";
+
+        if (is_numeric($numTel)) {
+            echo "Ok c'est bon le numéro de téléphone est bien numérique.<hr>";
+        }
+
+        separateur();
+        // ucfirst() pour mettre le premier caractère d'une chaine en majuscule
+        $nom = "wayne";
+        echo ucfirst($nom);
+
+        separateur();
 
         echo '<h2>09 - Fonctions utilisateur</h2>';
 
@@ -444,13 +527,41 @@
         echo direBonjour("Wassim");
 
         // Fonction permettant de calculer un prix HT en TTC
-        function appliqueTVA($prix) 
+        function appliqueTVA($prix)
         {
             return "Le montant TTC pour le prix HT : $prix €, est de : " . ($prix * 1.2) . "€<hr>";
         }
 
         echo appliqueTVA(100);
         echo appliqueTVA(500);
+
+        // EXERCICE : 
+        // Refaire une fonction de calcul de TVA, MAIS en permettant à l'utilisateur de saisir le taux de taxe à appliquer
+        // par exemple un appel comme ceci : echo appliqueTVA(100, 30); si je souhaite appliquer une tva de 30% sur le prix 100
+        // Une fois, cette fonction réalisée, l'améliorer en rendant la saisie du taux facultatif ! C'est à dire, si l'utilisateur ne saisi pas de second paramètre, alors ce sera un taux à 20% qui s'applique par défaut
+
+        function appliqueTVAtaux($prix, $taux)
+        {
+            if (empty($taux)) {
+                return "Le montant TTC pour le prix HT : $prix €, est de : " . ($prix * 1.2) . "€<hr>";
+            } else {
+                return "Le montant TTC pour le prix HT : $prix €, est de : " . ($prix + ($prix * ($taux / 100))) . "€<hr>";
+            }
+        }
+
+        echo appliqueTVAtaux(100, 30);
+        echo appliqueTVAtaux(100, 50);
+        echo appliqueTVAtaux(100, "");
+
+        // Pour rendre un argument facultatif, il faut lui donner une valeur dans ses param dans l'exécution de la fonction
+        function appliqueTVAtaux2($prix, $taux = 20)
+        {
+            $prixTTC = $prix * (1 + ($taux / 100));
+            return "Le montant TTC pour le prix HT : $prix €, est de : " . $prixTTC . "€<hr>";
+        }
+
+        echo appliqueTVAtaux2(1000);
+
 
         // fonction pour afficher la météo 
         function meteo($saison, $temperature)
@@ -464,26 +575,364 @@
         separateur();
 
 
-        echo meteo ("printemps", 20);
-        echo meteo ("été", 35);
-        echo meteo ("automne", 10);
-        echo meteo ("hiver", 1);
+        echo meteo("printemps", 20);
+        echo meteo("été", 35);
+        echo meteo("automne", 10);
+        echo meteo("hiver", 1);
+
+        // EXERCICE : 
+
+        // Amélioration de la fonction météo 
+        // On veut corriger le "en" printemps, en "au" printemps
+        // Et on veut aussi gérer les degrés au pluriel lorsque c'est nécessaire, sinon, au singulier 
+
+        function meteo2($saison, $temperature)
+        {
+
+            if ($saison == "printemps") {
+                $article = "au";
+            } else {
+                $article = "en";
+            }
+
+            if ($temperature == 1 || $temperature == -1 || $temperature == 0) {
+                $degre = "degré";
+            } else {
+                $degre = "degrés";
+            }
+
+            return "Nous sommes $article $saison et il fait $temperature $degre <br>";
+        }
+
+        echo meteo2("printemps", 20);
+        echo meteo2("été", 35);
+        echo meteo2("automne", 10);
+        echo meteo2("hiver", 1);
+
+        separateur();
+
+        function meteo3($saison, $temperature)
+        {
+            $article = "en";
+            if ($saison == "printemps") $article = "au";
+
+            $degre = "degrés";
+            if ($temperature == 1 || $temperature == -1 || $temperature == 0) $degre = "degré";
+
+            return "Nous sommes $article $saison et il fait $temperature $degre <br>";
+        }
+
+        echo meteo3("printemps", 20);
+        echo meteo3("été", 35);
+        echo meteo3("automne", 10);
+        echo meteo3("hiver", 1);
+
+        separateur();
+
+        function meteo4($saison, $temperature)
+        {
+            $art = ($saison == "printemps") ? "au" : "en";
+            $s = (abs($temperature) <= 1) ? "" : "s";
+
+            return "Nous sommes $art $saison et il fait $temperature degré$s <br>";
+        }
+
+        echo meteo4("printemps", 20);
+        echo meteo4("été", 35);
+        echo meteo4("automne", 10);
+        echo meteo4("hiver", 1);
+
+        // ENVIRONNEMENT - SCOPE 
+        // Global : Le script complet
+        // Local : à l'intérieur d'une fonction (également l'intérieur d'une classe et ses méthodes)
+
+        // L'existence d'une variable dépend de l'environnement où on la déclare
+        // Une variable déclarée dans un espace local (les accolades d'une fonction), n'existe QUE dans cette fonction 
+
+        separateur();
+
+        $animal = "chat"; // Variable déclarée dans l'espace global
+        echo $animal . "<hr>"; // chat
+
+        function foret()
+        {
+            $animal = "chien"; // Variable déclarée dans l'espace local
+            return $animal;
+        }
+
+        echo $animal . "<br>"; // chat
+        foret() . "<br>"; // rien, pas d'echo - ici un string "chien" se perds dans le code...
+        echo $animal . "<br>"; // chat
+        echo foret() . "<br>"; // chien
+        echo $animal . "<br>"; // chat 
+        $animal = foret(); // changement de valeur de la var globale par le string retourné par la fonction
+        echo $animal . "<br>"; // chien
+
+        separateur();
+
+        $pays = "France"; // Variable déclarée dans le scope global
+
+        function affiche_pays()
+        {
+            global $pays; // Avec le mot clé global, il est possible de récupérer une variable de l'espace global pour la ramener dans la fonction ! 
+            $pays = "Espagne";
+        }
+
+        echo $pays; // France 
+        affiche_pays(); // Pas d'echo, rien à l'affichage mais la valeur de $pays est changée pour espagne
+        echo $pays; // Espagne
+
+        // Il est possible de typer les arguments et le return d'une fonction 
+        function identite(string $nom, int $age = 38, int $cp = 75): string
+        {
+            return "$nom il a $age ans et habite dans le $cp";
+        }
+        separateur();
+        // Erreur le 3eme argument $cp n'est pas du bon type 
+        // echo identite("Pierra", 38, "coucou");
+        // Depuis PHP 8 on peut aussi appeler les arguments par leur nom, ce qui évite de tous les citer (surtout lorsque l'on a beaucoup d'arguments facultatifs)
+
+        // Ici j'ai pu donner une valeur au param facultatif $cp sans avoir eu besoin de citer $age
+        echo identite(nom: "Bob", cp: 64);
 
 
-        // EXERCICES : 
+        echo '<h2>10 - Structure itérative : Boucles</h2>';
 
-            // Refaire une fonction de calcul de TVA, MAIS en permettant à l'utilisateur de saisir le taux de taxe à appliquer
-            // par exemple un appel comme ceci : echo appliqueTVA(100, 30); si je souhaite appliquer une tva de 30% sur le prix 100
-            // Une fois, cette fonction réalisée, l'améliorer en rendant la saisie du taux facultatif ! C'est à dire, si l'utilisateur ne saisi pas de second paramètre, alors ce sera un taux à 20% qui s'applique par défaut
+        // Boucle for = boucle avec un compteur numérique 
+        // Utilisée uniquement avec des compteurs numériques 
 
-            // Amélioration de la fonction météo 
-                // On veut corriger le "en" printemps, en "au" printemps
-                // Et on veut aussi gérer les degrés au pluriel lorsque c'est nécessaire, sinon, au singulier 
+        // Besoin de 3 informations pour mener à bien cette boucle 
+        // - Un compteur
+        // - Une condition d'entrée
+        // - Une incrémentation / décrémentation 
 
+        // for(compteur;condition;incrementation) {}
+        for ($i = 0; $i < 10; $i++) {
+            echo "$i ";
+        }
 
+        echo "<br>";
 
+        for ($i = 0; $i < 10; $i++) :
+            echo "$i ";
+        endfor;
 
+        // Boucle while = boucle en fonction d'une condition (pas forcément numérique)
+        // while = "tant que" qqchoz se passe convenablement / un traitement / une instruction - jusqu'à ce que cela nous retourne false et la boucle s'arrête 
 
+        // On peut quand même la manipuler avec des compteurs numériques mais ce n'est pas le choix préféré
+        separateur();
+        $i = 0; // Compteur 
+        while ($i < 10) { // Condition d'entrée
+            echo "$i ";
+            $i++; // Incrémentation
+        }
+        echo "<br>";
+
+        while ($i < 10) :
+            echo "$i ";
+            $i++;
+        endwhile;
+
+        separateur();
+
+        // Si jamais on souhaite arrêter la boucle à un moment spécifique, on peut le faire avec le mot clé "break"
+        for ($i = 0; $i < 100; $i++) {
+            echo "$i ";
+            if ($i == 20) {
+                break; // on sort de la boucle
+            }
+        }
+
+        separateur();
+
+        // Exercice 
+        $i = 0;
+        while ($i < 10) {
+            echo "$i - ";
+            $i++;
+        }
+
+        // EXERCICE : Modifier cette boucle afin de ne pas avoir le tiret à la fin 
+        // Résultat actuel : 0 - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9 -
+        // Résultat attendu : 0 - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9
+
+        separateur();
+        $i = 0;
+        while ($i < 10) {
+            if ($i < 9)
+                echo "$i - ";
+            else {
+                echo $i;
+            }
+            $i++;
+        }
+
+        separateur();
+
+        for ($i = 0; $i < 10; $i++):
+            if ($i < 9) :
+                echo $i . ' - ';
+            else:
+                echo $i;
+            endif;
+        endfor;
+
+        separateur();
+
+        // Exercice 1
+        // Afficher des nombres allant de 1 à 100. 
+        $i = 1;
+        while ($i <= 100) {
+            echo "$i . ";
+            $i++;
+        }
+        separateur();
+        // Exercice 2
+        // Afficher des nombres allant de 1 à 100 avec le chiffre 50 en rouge.
+        for ($i = 1; $i < 101; $i++) {
+            if ($i == 50) {
+                echo "<div style='color:red;'>$i </div>";
+            } else {
+                echo "$i ";
+            }
+        }
+        separateur();
+        for ($i = 1; $i < 101; $i++) {
+            if ($i == 50) {
+                echo "<span style='color:red;'>$i </span>";
+            } else {
+                echo "$i ";
+            }
+        }
+        separateur();
+        // Exercice 3
+        // Afficher des nombres allant de 2000 à 1930.
+        $i = 2000;
+        while ($i >= 1930) {
+            echo "$i ";
+            $i--;
+        }
+
+        separateur();
+
+        // Exercice 4
+        // Afficher le titre suivant 10 fois : <h1>Titre à afficher 10 fois</h1>
+        $i = 1;
+        while ($i <= 10) {
+            echo "<h1>Titre à afficher 10 fois</h1>";
+            $i++;
+        }
+
+        separateur();
+
+        // Exercice 5
+        // Afficher le titre suivant "<h1>Je m'affiche pour la Nème fois</h1>".
+        // Remplacer le N avec la valeur de $i (tour de boucle).
+        // Bien gérer le "1ère" fois et non pas "1ème"
+        for ($i = 1; $i <= 10; $i++) {
+            if ($i == 1) {
+                echo "<h1>Je m'affiche pour la $i" . "ère fois</h1>";
+            } else {
+                echo "<h1>Je m'affiche pour la $i" . "ème fois</h1>";
+            }
+        }
+
+        separateur();
+
+        for ($i = 1; $i <= 10; $i++) {
+            $erm = ($i == 1) ? "ère" : "ème";
+            echo "<h1>Je m'affiche pour la $i$erm fois</h1>";
+            // if ($i == 1) {
+            //     echo "<h1>Je m'affiche pour la $i" . "ère fois</h1>";
+            // } else {
+            //     echo "<h1>Je m'affiche pour la $i" . "ème fois</h1>";
+            // }
+        }
+
+        echo '<h2>11 - Tableaux de données array</h2>';
+        // Array est un nouveau type de données 
+        // Une variable de type array, nous permet de conserver un ensemble de valeur
+        // Un array est toujours composé de deux colonnes 
+        // Une colonne représente une "clé"/"index"/"id"/"key"
+        // Une colonne représente la valeur associée à cette clé 
+
+        // Déclaration d'un tableau array 
+        $tabJours = array("lundi", "mardi", "mercredi", "jeudi", "vendredi");
+
+        // echo $tabJours;
+
+        // Pour voir l'intégralité d'un array, on ne peut pas utiliser un simple echo ! 
+        // Error, array to string conversion
+
+        // Deux outils de controle nous permettent de vérifier le contenu des array (et aussi des objets et encore d'autres choses) : 
+        // - var_dump()
+        // - print_r()
+        // Ces deux outils nous permettent de visualiser les clés et les valeurs
+
+        var_dump($tabJours);
+
+        echo "<pre>";
+        print_r($tabJours);
+        echo "</pre>";
+
+        function dump($var)
+        {
+            echo "<pre>";
+            print_r($var);
+            echo "</pre>";
+        }
+
+        // Ici on comprends bien que notre tableau s'est indexé numériquement de façon automatique, les indices commençant à 0 pour lundi
+        //         Array
+        // (
+        //     [0] => lundi
+        //     [1] => mardi
+        //     [2] => mercredi
+        //     [3] => jeudi
+        //     [4] => vendredi
+        // )
+
+        dump($tabJours);
+
+        // Il n'est pas possible d'afficher un tableau array complet avec un echo, cependant, nous pouvons piocher dedans en appelant l'indice correspondant
+        // Si je veux afficher mercredi ? C'est l'indice 2, que j'appelle entre crochets 
+        // Les crochets [] sont les éléments représentatifs des tableaux array en php 
+        echo $tabJours[2];
+
+        // Pour rajouter un ou des éléments dans un tableau array : array_push()
+        array_push($tabJours, "samedi", "dimanche");
+        dump($tabJours);
+
+        // Autres façons de déclarer un tableau array
+        $tabMois = ["janvier", "fevrier", "mars", "avril"];
+
+        dump($tabMois);
+        // Autre syntaxe pour rajouter des éléments dans un tableau
+        $tabMois[] = "mai";
+        $tabMois[] = "juin";
+        dump($tabMois);
+
+        $tabFruits[] = "fraises"; // La première ligne crée le tableau
+        $tabFruits[] = "pommes"; // Les lignes suivantes ajoutent des éléments 
+        $tabFruits[] = "bananes";
+        $tabFruits[] = "coco";
+        
+        // Pour connaitre la taille d'un tableau : 
+        // count() ou sizeof() 
+        echo "Taille du tableau contenant les fruits : " . count($tabFruits) . "<hr>";
+        echo "Taille du tableau contenant les fruits : " . sizeof($tabFruits) . "<hr>";
+
+        // EXERCICE : En utilisant une boucle   
+            // Affichez le contenu du tabFruits dans une liste ul li 
+            // Le but étant d'utiliser la valeur du compteur, pour pointer vers un élément du tableau array 
+            // Et ça jusqu'à la fin du tableau
+
+            // <ul>
+            //     <li></li>
+            //     <li></li>
+            //     <li></li>
+            // </ul>
 
 
 
