@@ -902,7 +902,10 @@
 
         // Pour rajouter un ou des éléments dans un tableau array : array_push()
         array_push($tabJours, "samedi", "dimanche");
+
+
         dump($tabJours);
+
 
         // Autres façons de déclarer un tableau array
         $tabMois = ["janvier", "fevrier", "mars", "avril"];
@@ -917,22 +920,193 @@
         $tabFruits[] = "pommes"; // Les lignes suivantes ajoutent des éléments 
         $tabFruits[] = "bananes";
         $tabFruits[] = "coco";
-        
+
         // Pour connaitre la taille d'un tableau : 
         // count() ou sizeof() 
         echo "Taille du tableau contenant les fruits : " . count($tabFruits) . "<hr>";
         echo "Taille du tableau contenant les fruits : " . sizeof($tabFruits) . "<hr>";
 
         // EXERCICE : En utilisant une boucle   
-            // Affichez le contenu du tabFruits dans une liste ul li 
-            // Le but étant d'utiliser la valeur du compteur, pour pointer vers un élément du tableau array 
-            // Et ça jusqu'à la fin du tableau
+        // Affichez le contenu du tabFruits dans une liste ul li 
+        // Le but étant d'utiliser la valeur du compteur, pour pointer vers un élément du tableau array 
+        // Et ça jusqu'à la fin du tableau
 
-            // <ul>
-            //     <li></li>
-            //     <li></li>
-            //     <li></li>
-            // </ul>
+        // <ul>
+        //     <li></li>
+        //     <li></li>
+        //     <li></li>
+        // </ul>
+
+        // Avec la boucle for
+        echo "<ul>";
+        for ($i = 0; $i < count($tabFruits); $i++) {
+            echo "<li>" . $tabFruits[$i] . "</li>";
+        }
+        echo "</ul>";
+
+        // Avec la boucle while 
+        echo "<ul>";
+        $i = 0;
+        while ($i < count($tabFruits)) {
+            echo "<li>" . $tabFruits[$i] . "</li>";
+            $i++;
+        }
+        echo "</ul>";
+
+        // Avec la boucle foreach
+        echo "<ul>";
+        foreach ($tabFruits as $fruit) {
+            echo "<li>$fruit</li>";
+        }
+        echo "</ul>";
+
+        separateur();
+
+        // Il est possible en PHP d'avoir des key de array nommées par des mots ! 
+        $user = array("pseudo" => "Pierra", "email" => "pierra@mail.fr", "age" => 38, "date_inscription" => "2020-05-05");
+
+        var_dump($user);
+
+        $user["ville"] = "Montpellier";
+        $user["cp"] = 34000;
+
+        var_dump($user);
+
+        // Un array, avec des clés en "mots" est appelé un array associatif
+        // Pour piocher un élément d'un array associatif, on spécifie le nom de la clé entre les crochets
+        // Attention les clés sont des string donc entre '' ou ""
+        echo $user["pseudo"];
+
+        // Pour parcourir tous les éléments d'un tableau array, j'utilise un outil de boucle spécifique
+        // La boucle foreach()
+        // Cette boucle permet de parcourir tous les éléments d'un tableau ou d'un objet un par un 
+
+        // Deux syntaxes possibles
+        // L'une nous permet de récupérer que les valeurs
+        // L'autre nous permet de récupérer les valeurs ainsi que les clés 
+
+        //             array (size=6)
+        //   'pseudo' => string 'Pierra' (length=6)
+        //   'email' => string 'pierra@mail.fr' (length=14)
+        //   'age' => int 38
+        //   'date_inscription' => string '2020-05-05' (length=10)
+        //   'ville' => string 'Montpellier' (length=11)
+        //   'cp' => int 34000
+
+        foreach ($user as $valeur) { // Ici une seule variable nommée après le as, me permet de récupérer à chaque tour de boucle la valeur de l'élément (d'abord Pierra, puis pierra@mail.fr, puis 38, puis 2020-05-05)
+            echo "- $valeur<br>";
+        }
+
+        separateur();
+
+        foreach ($user as $cle => $valeur) { // Ici deux variables après as, la première récupère le nom de la key ($cle recupere la key), la deuxieme récupère la valeur
+            // Cela me permet eventuellement d'ajouter une condition pour amener un traitement spécifique sur une ou plusieurs key
+
+            // Par exemple on affiche seulement les key pseudo email age
+            if ($cle == "pseudo" || $cle == "email" || $cle == "age") {
+                echo "- $cle : $valeur<br>";
+            }
+
+            // Si une cle image existait, il faudrait la traiter differemment, avec une balise img
+            if ($cle == "image") {
+                echo "<img src='$valeur'>";
+            }
+        }
+
+        // Il est possible d'avoir un tableau dans un autre tableau
+        // C'est ce qu'on appelle un tableau multidimensionnel
+        // Je défini ici $users contenant plusieurs valeurs représentant chacun un array concernant un user
+        $users = array();
+        $users[] = $user;
+        var_dump($users);
+
+        $users[] = array("pseudo" => "Bob", "email" => "bob@mail.fr", "age" => 12, "date_inscription" => "2022-05-05");
+        $users[] = array("pseudo" => "Jimmy", "email" => "jim@mail.fr", "age" => 40, "date_inscription" => "2022-05-05");
+
+        var_dump($users);
+
+        // array (size=3)
+        //   0 => 
+        //     array (size=6)
+        //       'pseudo' => string 'Pierra' (length=6)
+        //       'email' => string 'pierra@mail.fr' (length=14)
+        //       'age' => int 38
+        //       'date_inscription' => string '2020-05-05' (length=10)
+        //       'ville' => string 'Montpellier' (length=11)
+        //       'cp' => int 34000
+        //   1 => 
+        //     array (size=4)
+        //       'pseudo' => string 'Bob' (length=3)
+        //       'email' => string 'bob@mail.fr' (length=11)
+        //       'age' => int 12
+        //       'date_inscription' => string '2022-05-05' (length=10)
+        //   2 => 
+        //     array (size=4)
+        //       'pseudo' => string 'Jimmy' (length=5)
+        //       'email' => string 'jim@mail.fr' (length=11)
+        //       'age' => int 40
+        //       'date_inscription' => string '2022-05-05' (length=10)
+
+        // Pour piocher dans un tableau array on enchaine une succession de crochets pour appeler petit à petit les indices, on rentre niveau par niveau
+        echo $users[2]["pseudo"];
+
+        // Avec un array contenant plusieurs éléments (plusieurs users, plusieurs produits, plusieurs articles ou autre)
+        // On utilise la boucle foreach pour affiner le résultat et récupérer les user un à un
+        // D'où le nommage de nos variables "parmis les $userS on récupère un $user"
+        foreach ($users as $user) {
+            var_dump($user);
+
+            foreach ($user as $cle => $valeur) {
+                echo "- $cle : $valeur<br>";
+            }
+            separateur();
+        }
+
+        separateur();
+
+        foreach ($users[2] as $cle => $valeur) {
+            echo "- $cle : $valeur<br>";
+        }
+
+        dump($users);
+
+
+        echo '<h2>12 - Inclusion de fichier</h2>';
+
+        // Créer un fichier nommé _exemple.php
+        // ou exemple.inc.php
+        // On insère un peu de contenu texte dans cet autre fichier 
+
+        // On peut en PHP, inclure des fichiers/pages à l'intérieur d'un autre
+        // Pour cela, deux outils : include et require avec leurs versions _once    include_once et require_once
+
+        // La différence entre ces deux outils réside dans leur gestion des erreurs
+        // include génèrera une erreur warning, la suite du code peut continuer de s'exécuter
+        // require génèrera une erreur fatal error, l'exécution du code s'arrête immédiatement 
+
+        echo "<b>Premier appel avec include : </b><hr>";
+        // include "_exemple.php"; // Ramène tout le contenu de _exemple.php dans notre fichier syntaxe.php
+        separateur();
+
+        echo "<b>Deuxième appel avec include_once : </b><hr>";
+        include_once "_exemple.php"; // ne s'affiche pas car déjà inclus par le include de la ligne précédente
+        separateur();
+
+        echo "<b>Premier appel avec require : </b><hr>";
+        require "_exemple.php"; // Ramène tout le contenu de _exemple.php dans notre fichier syntaxe.php
+        separateur();
+
+        echo "<b>Deuxième appel avec require_once : </b><hr>";
+        // require_once "_exemple.php"; // ne s'affiche pas car déjà inclus par le require de la ligne précédente
+        separateur();
+
+
+
+
+
+
+
+
 
 
 

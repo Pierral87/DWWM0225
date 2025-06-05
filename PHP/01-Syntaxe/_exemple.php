@@ -1,0 +1,4 @@
+<h1>Fichier à inclure _exemple.php</h1>
+<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae asperiores, delectus cupiditate placeat debitis dolorem, quia harum accusantium consequatur corporis, nesciunt illum! Cupiditate, aliquid. Dolorum provident in ad inventore perferendis.
+    Nobis inventore ab incidunt officiis velit dicta enim, consequuntur ipsum et! Aperiam quibusdam inventore doloribus quod nemo optio quam. Minima officia ea accusantium ad consequuntur adipisci eveniet fuga fugiat exercitationem.
+    Earum dolores quidem voluptatum at nihil debitis mollitia tenetur, fugiat magni illo. Nobis quaerat delectus, maxime consectetur quibusdam modi ipsa architecto ab. Quasi at iure architecto, dignissimos blanditiis fuga nesciunt.</p>
