@@ -50,9 +50,19 @@ Ces informations sont reçues de la forme suivante :
         <!-- Ici je fais une boucle each pour parcourir toutes les catégories récupérées, pour créer un lien pour chacune
          Les params transmits dans le GET s'adaptent ainsi que le nom du lien -->
         <?php foreach ($categories as $categorie) : ?>
-            <li><a href="listeProduits.php?categorie=<?= $categorie["code"] ?>"><?= $categorie["nom"] ?></a></li>
+            <li><a href="listeProduits.php?categorie=<?= $categorie["code"] ?>">     <?= $categorie["nom"] ?>      </a></li>
         <?php endforeach; ?>
     </ul>
+
+    <?php
+    echo "<ul>";
+    foreach ($categories as $categorie) {
+        echo  "<li><a href='listeProduits.php?categorie=" . $categorie['code'] . '\'>' .  $categorie['nom'] . "</a></li>";
+    }
+    echo "</ul>";
+    ?>
+
+
 
 </body>
 

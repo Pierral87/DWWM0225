@@ -61,6 +61,7 @@ if (isset($_POST["nom"], $_POST["email"], $_POST["message"]) && $_SERVER["REQUES
 </div>';
     }
 
+
     // Est ce que l'email est vraiment d'un format valide ?
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreur .= '<div class="alert alert-danger" role="alert">
@@ -113,11 +114,13 @@ if (isset($_POST["nom"], $_POST["email"], $_POST["message"]) && $_SERVER["REQUES
     <div class="container">
         <h1>Contactez-nous</h1>
 
+        <!-- Pour traiter un formulaire en PHP via POST, il ne faut surtout pas oublier de rajouter method="POST" dans la balise form -->
         <form method="POST">
             <!-- Ci dessous l'affichage des erreurs s'il y en a -->
             <?= $erreur ?>
             <div class="mb-3">
                 <label for="nom" class="form-label">Nom</label>
+                <!-- Dans chaque input/textarea ou autre, il faut aussi absolument renseigner l'attribut "name" sinon cet élément ne sera pas transmit au PHP -->
                 <input type="text" class="form-control" id="nom" value="<?= $nom ?>" name="nom">
             </div>
             <div class="mb-3">
@@ -127,9 +130,7 @@ if (isset($_POST["nom"], $_POST["email"], $_POST["message"]) && $_SERVER["REQUES
             <div class="mb-3">
                 <label for="message" class="form-label">Message</label>
                 <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="message" style="height: 100px" name="message">
-                    <?= $message ?>
-                </textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" id="message" style="height: 100px" name="message"><?= $message ?></textarea>
                     <label for="floatingTextarea2">Votre message</label>
                 </div>
             </div>
