@@ -16,7 +16,7 @@
 var_dump($_GET);
 
 
-if (isset($_GET["pays"]) ) {
+if (isset($_GET["pays"])) {
     $pays = $_GET["pays"];
 
     if($pays == "france") $message = "Vous êtes français ?";

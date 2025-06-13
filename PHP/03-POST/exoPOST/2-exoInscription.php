@@ -54,12 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["pseudo"], $_POST["ema
     }
 
     // Vérifier si l'utilisateur existe déjà
-    foreach ($_SESSION['users'] as $user) {
-        if ($user['pseudo'] === $pseudo) {
-            $errors[] = "Le pseudo est déjà pris.";
-            break;
-        }
-    }
+    // foreach ($_SESSION['users'] as $user) {
+    //     if ($user['pseudo'] === $pseudo) {
+    //         $errors[] = "Le pseudo est déjà pris.";
+    //         break;
+    //     }
+    // }
 
     // Si pas d'erreurs, on enregistre l'utilisateur
     if (empty($errors)) {

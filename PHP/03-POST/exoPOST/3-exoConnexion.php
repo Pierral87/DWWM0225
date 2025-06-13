@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["pseudo"], $_POST["pas
         <div class="row">
             <div class="col-md-6 mx-auto">
                 <h1>Connexion</h1>
-                <h3>Bonjour <?= $_SESSION["connected_user"]["pseudo"] ?></h3>
+                <!-- <h3>Bonjour <?= $_SESSION["connected_user"]["pseudo"] ?></h3> -->
 
                 <?php if ($loginError): ?>
                     <div class="alert alert-danger"><?= $loginError ?></div>
