@@ -154,7 +154,7 @@
         // Cependant, comme son nom l'indique, cette valeur restera... constante ! 
         // Par convention d'écriture, une constant s'écrit tout en majuscule 
 
-        // déclaration d'une variable globale 
+        // déclaration d'une constante globale 
         define("URL", "http://localhost/DWWM0225/PHP/");
         echo URL . "<br>";
 

@@ -49,7 +49,7 @@ class Utilisateur
         if(iconv_strlen($newNom >= 1)) {
             $this->nom = $newNom;
         } else {
-            trigger_error("Le nom ne peut pas être vide", E_USER_ERROR);
+            trigger_error("Le nom ne peut pas être vide", E_USER_WARNING);
         }
     }
 
