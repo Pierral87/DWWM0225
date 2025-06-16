@@ -36,8 +36,8 @@ class Utilisateur
     public function __construct($nom, $email)
     {
         echo "Instanciation de l'objet Utilisateur";
-        $this->nom = $nom;
-        $this->email = $email;
+        $this->setNom($nom);
+        $this->setEmail($email);
     }
 
     public function saluer()

@@ -30,5 +30,32 @@
             - La méthode donnerEssence() distribue automatiquement le plein (50litres) à la voiture, si elle le peut, sinon, ce qu'il lui reste (dans la pompe)
             - Gérez les exceptions qui peuvent être rencontrées à l'appel de la méthode donnerEssence()
 
-
  */
+
+ class Vehicule {
+    private $litresReservoir;
+
+    public function setlitresReservoir() {
+
+    }
+
+    public function getlitresReservoir() {
+
+    }
+ }
+
+ class Pompe {
+    private $litresStock;
+
+    public function setLitresStock() {
+
+    }
+
+    public function getLitresStock() {
+
+    }
+
+    public function donnerEssence() {
+        
+    }
+ }
