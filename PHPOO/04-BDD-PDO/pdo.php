@@ -288,4 +288,8 @@ var_dump($data);
 // Comment afficher Jean-Pierre ?
 echo $data[0]["prenom"];
 
+// EXERCICE : Affichez les noms et prénoms des employés dans une liste ul li 
+        // Le faire avec fetch
+        // Le faire aussi avec fetchAll
+
 
