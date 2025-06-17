@@ -374,13 +374,13 @@ var_dump($data);
 
 
 // Avec une requêtes à plusieurs tokens, c'est peut être plus long d'écrire tous les bindParam, mais au moins c'est clair et on limite le risque d'oublie et d'erreur 
-$stmt = $pdo->prepare("INSERT INTO employes (prenom, nom, salaire, sexe, date_embauche, service) VALUES (:prenom, :nom, :salaire, :sexe, CURDATE(), :service)");
-$stmt->bindParam(":prenom", $prenom, PDO::PARAM_STR);
-$stmt->bindParam(":nom", $nom, PDO::PARAM_STR);
-$stmt->bindParam(":salaire", $salaire, PDO::PARAM_STR);
-$stmt->bindParam(":sexe", $sexe, PDO::PARAM_STR);
-$stmt->bindParam(":service", $service, PDO::PARAM_STR);
-$stmt->execute();
+// $stmt = $pdo->prepare("INSERT INTO employes (prenom, nom, salaire, sexe, date_embauche, service) VALUES (:prenom, :nom, :salaire, :sexe, CURDATE(), :service)");
+// $stmt->bindParam(":prenom", $prenom, PDO::PARAM_STR);
+// $stmt->bindParam(":nom", $nom, PDO::PARAM_STR);
+// $stmt->bindParam(":salaire", $salaire, PDO::PARAM_STR);
+// $stmt->bindParam(":sexe", $sexe, PDO::PARAM_STR);
+// $stmt->bindParam(":service", $service, PDO::PARAM_STR);
+// $stmt->execute();
 
 
 
